@@ -1,0 +1,52 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" type="text/css" href="c.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>To Do List</h2>
+            <input type="text" placeholder="Write here..." id="inputBx">
+            <ul id="list"></ul>
+        </div>
+    </div>
+    <script>
+        let inputBx = document.querySelector('#inputBx');
+        let list = document.querySelector('#list');
+
+        inputBx.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                addItem(this.value);
+                this.value = "";
+            }
+        });
+
+        function addItem(text) {
+            if (text.trim() === "") return; // Prevent adding empty items
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML = `${text} <i class="remove"></i>`;
+
+            listItem.addEventListener("click", function(){
+                this.classList.toggle('done');
+            });
+
+            // Add event listener to the remove icon
+            listItem.querySelector('i.remove').addEventListener("click", function(event) {
+                event.stopPropagation(); // Prevent triggering the parent click event
+                this.parentElement.remove(); // Remove the list item
+            });
+
+            list.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
